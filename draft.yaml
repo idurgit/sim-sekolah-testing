@@ -1,5 +1,65 @@
 models:
-  # ...
+  Student:
+    name: string:100
+    date_of_birth: date
+    sex: enum:male,female
+    relationships:
+      belongsTo: User
+      hasMany: Enrollment
 
-controllers:
-  # ...
+  AcademicYear:
+    year: string
+    relationships:
+      hasMany: Classroom
+
+  Level:
+    name: string
+    relationships:
+      hasMany: Classroom
+
+  Course:
+    name: string
+    relationships:
+      hasMany: Session
+
+  CourseSession:
+    name: string
+    session_date: date
+    session_note: string
+    relationships:
+      belongsTo: Course, Classroom
+      hasMany: Enrollment
+
+  Assessment:
+    result: nullable string
+    relationships:
+      belongsTo: CourseSession, Enrollment
+
+  Classroom:
+    name: string
+    relationships:
+      hasMany: Enrollment
+      belongsTo: AcademicYear, Level
+
+  Enrollment:
+    relationships:
+      belongsTo: Student, Classroom
+      hasMany: Billing, Assessment
+
+  Billing:
+    amount: decimal:10,2
+    due_date: date
+    note: string
+    relationships:
+      belongsTo: Enrollment
+      hasMany: Transaction
+      
+  Transaction:
+    amount: decimal:10,2
+    date: date
+    status: enum:pending,paid,failure
+    snap_token: nullable string
+    relationships:
+      belongsTo: Billing
+
+seeder: Student, AcademicYear, Level, Course, CourseSession, Classroom, Enrollment, Billing, Transaction

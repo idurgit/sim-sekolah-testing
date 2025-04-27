@@ -1,5 +1,46 @@
+created:
+    - database/factories/StudentFactory.php
+    - database/factories/AcademicYearFactory.php
+    - database/factories/LevelFactory.php
+    - database/factories/CourseFactory.php
+    - database/factories/CourseSessionFactory.php
+    - database/factories/AssessmentFactory.php
+    - database/factories/ClassroomFactory.php
+    - database/factories/EnrollmentFactory.php
+    - database/factories/BillingFactory.php
+    - database/factories/TransactionFactory.php
+    - database/migrations/2025_04_27_055908_create_students_table.php
+    - database/migrations/2025_04_27_055909_create_academic_years_table.php
+    - database/migrations/2025_04_27_055910_create_levels_table.php
+    - database/migrations/2025_04_27_055911_create_courses_table.php
+    - database/migrations/2025_04_27_055912_create_course_sessions_table.php
+    - database/migrations/2025_04_27_055913_create_assessments_table.php
+    - database/migrations/2025_04_27_055914_create_classrooms_table.php
+    - database/migrations/2025_04_27_055915_create_enrollments_table.php
+    - database/migrations/2025_04_27_055916_create_billings_table.php
+    - database/migrations/2025_04_27_055917_create_transactions_table.php
+    - app/Models/Student.php
+    - app/Models/AcademicYear.php
+    - app/Models/Level.php
+    - app/Models/Course.php
+    - app/Models/CourseSession.php
+    - app/Models/Assessment.php
+    - app/Models/Classroom.php
+    - app/Models/Enrollment.php
+    - app/Models/Billing.php
+    - app/Models/Transaction.php
 models:
     Book: { title: string, author: string, description: text }
     Contact: { name: string }
     Post: { title: string, content: text }
     User: { name: string, email: string, email_verified_at: 'timestamp nullable', password: 'string nullable', remember_token: 'string:100 nullable', avatar_url: 'string nullable' }
+    Student: { name: 'string:100', date_of_birth: date, sex: 'enum:male,female', relationships: { belongsTo: User, hasMany: Enrollment } }
+    AcademicYear: { year: string, relationships: { hasMany: Classroom } }
+    Level: { name: string, relationships: { hasMany: Classroom } }
+    Course: { name: string, relationships: { hasMany: Session } }
+    CourseSession: { name: string, session_date: date, session_note: string, relationships: { belongsTo: 'Course, Classroom', hasMany: Enrollment } }
+    Assessment: { result: 'nullable string', relationships: { belongsTo: 'CourseSession, Enrollment' } }
+    Classroom: { name: string, relationships: { hasMany: Enrollment, belongsTo: 'AcademicYear, Level' } }
+    Enrollment: { relationships: { belongsTo: 'Student, Classroom', hasMany: 'Billing, Assessment' } }
+    Billing: { amount: 'decimal:10,2', due_date: date, note: string, relationships: { belongsTo: Enrollment, hasMany: Transaction } }
+    Transaction: { amount: 'decimal:10,2', date: date, status: 'enum:pending,paid,failure', snap_token: 'nullable string', relationships: { belongsTo: Billing } }
