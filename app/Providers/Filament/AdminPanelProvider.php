@@ -12,6 +12,7 @@ use DutchCodingCompany\FilamentSocialite\Provider;
 use Filament\Forms\Components\FileUpload;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -94,7 +95,33 @@ class AdminPanelProvider extends PanelProvider
             ->plugins(
                 $this->getPlugins()
             )
-            ->databaseNotifications();
+            ->databaseNotifications()
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Learning Activities')
+                    ->icon('heroicon-o-book-open')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Academic Settings')
+                    ->icon('heroicon-o-academic-cap')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Finance')
+                    ->icon('heroicon-o-currency-dollar')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Settings')
+                    ->icon('heroicon-o-cog')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Filament Shield')
+                    ->icon('heroicon-o-lock-closed')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('User')
+                    ->icon('heroicon-o-users')
+                    ->collapsed(),
+                ]);
     }
 
     private function getPlugins(): array

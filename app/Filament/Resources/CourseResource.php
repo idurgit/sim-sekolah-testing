@@ -27,7 +27,7 @@ class CourseResource extends Resource
     }
     protected static ?string $navigationLabel = 'Courses';
 
-    protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-bar';
+    // protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-bar';
 
     public static function form(Form $form): Form
     {
